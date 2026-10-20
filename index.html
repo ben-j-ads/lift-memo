@@ -141,7 +141,7 @@
       <div class="inputs">
         <label class="field">Test name<input type="text" id="nm" maxlength="60"></label>
         <label class="field">Dates<input type="text" id="per" maxlength="40"></label>
-        <label class="field">What was tested<input type="text" id="what" maxlength="90"></label>
+        <label class="field" style="grid-column: 1 / -1">What was tested<input type="text" id="what" maxlength="90"></label>
       </div>
       <div class="waves" style="margin-top:14px">
         <div class="wave">
@@ -336,6 +336,7 @@ cost per incremental conversion = spend / incremental conversions</div>
     const si = (x) => (x < 0 ? '\u2212' : '') + fmtN(Math.abs(x));
     const ps = (x, dp = 1) => (x < 0 ? '\u2212' : '') + (Math.abs(x) * 100).toFixed(dp) + '%';
     const pts = (x) => sgn(x * 100, 2);
+    const rf = (x) => (x < 0 ? '\u2212' : '') + Math.abs(x).toFixed(2);
     const rng = (o, f) => `${f(o.lo)} to ${f(o.hi)}`;
     let last = null;
 
@@ -362,7 +363,7 @@ cost per incremental conversion = spend / incremental conversions</div>
         ['Relative lift', r.rel ? ps(r.rel.est) : 'n/a', r.rel ? `${ps(r.rel.lo)} to ${ps(r.rel.hi)}` : 'n/a'],
         ['Extra conversions', si(r.inc.est), rng(r.inc, si)],
         ['Extra revenue', mo(r.incRev.est), rng(r.incRev, mo)],
-        ['Incremental ROAS', r.iroas ? sgn(r.iroas.est, 2) : 'n/a', r.iroas ? rng(r.iroas, (x) => sgn(x, 2)) : 'n/a'],
+        ['Incremental ROAS', r.iroas ? rf(r.iroas.est) : 'n/a', r.iroas ? rng(r.iroas, rf) : 'n/a'],
         ['Profit after ad spend', mo(r.profit.est), rng(r.profit, mo)],
         ['Cost per extra conversion', r.icpa ? mo(r.icpa.est) : 'n/a', r.icpa ? rng(r.icpa, mo) : 'range includes zero lift, so no upper bound'],
       ];
@@ -404,7 +405,7 @@ cost per incremental conversion = spend / incremental conversions</div>
       if (!last) return; const { v, r, verdict } = last;
       makeCard({ file: 'lift-memo', kicker: 'Lift memo', headline: verdict + '.', hl: verdict !== 'lift proven',
         big: `${sgn(r.d * 100, 2)} points`,
-        lines: [`${v.nm}`, `${v.c}% range: ${sgn(r.lo * 100, 2)} to ${sgn(r.hi * 100, 2)} points`, r.iroas ? `Incremental ROAS ${sgn(r.iroas.est, 2)} (${sgn(r.iroas.lo, 2)} to ${sgn(r.iroas.hi, 2)})` : '', `${fmtN(v.n1)} treated, ${fmtN(v.n0)} held out`].filter(Boolean),
+        lines: [`${v.nm}`, `${v.c}% range: ${sgn(r.lo * 100, 2)} to ${sgn(r.hi * 100, 2)} points`, r.iroas ? `Incremental ROAS ${rf(r.iroas.est)} (${rf(r.iroas.lo)} to ${rf(r.iroas.hi)})` : '', `${fmtN(v.n1)} treated, ${fmtN(v.n0)} held out`].filter(Boolean),
         foot: 'Random assignment assumed. Test window only.' });
     });
     wireCopy('copy', 'copied');
