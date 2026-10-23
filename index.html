@@ -127,6 +127,14 @@
     }
 
     @media (prefers-color-scheme: dark) { h1 mark, .big span { background: linear-gradient(transparent 4%, var(--lime) 4%, var(--lime) 98%, transparent 98%); } }
+
+    /* polish: aligned inputs, chart label halo, next-step link */
+    .inputs, .adv { align-items: end; }
+    #chart .cap { paint-order: stroke; stroke: var(--paper-raised); stroke-width: 4px; stroke-linejoin: round; }
+    .next-step { border: 1px solid var(--rule); border-left: 4px solid var(--ink); background: var(--paper-raised); padding: 14px 16px; margin: 24px 0 0; }
+    .next-step .k { color: var(--ink-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+    .next-step a { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; text-transform: lowercase; }
+    .next-step p { margin: 4px 0 0; color: var(--ink-muted); font-size: 0.92rem; }
   </style>
 </head>
 <body>
@@ -139,28 +147,28 @@
 
     <section class="panel">
       <div class="inputs">
-        <label class="field">Test name<input type="text" id="nm" maxlength="60"></label>
-        <label class="field">Dates<input type="text" id="per" maxlength="40"></label>
-        <label class="field" style="grid-column: 1 / -1">What was tested<input type="text" id="what" maxlength="90"></label>
+        <label class="field">Test name<input autocomplete="off" type="text" id="nm" maxlength="60"></label>
+        <label class="field">Dates<input autocomplete="off" type="text" id="per" maxlength="40"></label>
+        <label class="field" style="grid-column: 1 / -1">What was tested<input autocomplete="off" type="text" id="what" maxlength="90"></label>
       </div>
       <div class="waves" style="margin-top:14px">
         <div class="wave">
           <h3>saw the ads (treated)</h3>
-          <label class="field">People<input type="number" id="n1" min="2" step="1" inputmode="numeric"></label>
-          <label class="field">Conversions<input type="number" id="x1" min="0" step="1" inputmode="numeric"></label>
+          <label class="field">People<input autocomplete="off" type="number" id="n1" min="2" step="1" inputmode="numeric"></label>
+          <label class="field">Conversions<input autocomplete="off" type="number" id="x1" min="0" step="1" inputmode="numeric"></label>
         </div>
         <div class="wave">
           <h3>held out (control)</h3>
-          <label class="field">People<input type="number" id="n0" min="2" step="1" inputmode="numeric"></label>
-          <label class="field">Conversions<input type="number" id="x0" min="0" step="1" inputmode="numeric"></label>
+          <label class="field">People<input autocomplete="off" type="number" id="n0" min="2" step="1" inputmode="numeric"></label>
+          <label class="field">Conversions<input autocomplete="off" type="number" id="x0" min="0" step="1" inputmode="numeric"></label>
         </div>
       </div>
       <div class="inputs tight" style="margin-top:14px">
-        <label class="field">Ad spend <span class="suffix">$</span><input type="number" id="sp" min="0" step="100" inputmode="numeric"></label>
-        <label class="field">Revenue per conversion <span class="suffix">$</span><input type="number" id="rpc" min="0" step="1" inputmode="decimal"></label>
-        <label class="field">Contribution margin <span class="suffix">%</span><input type="number" id="mar" min="1" max="100" step="1" inputmode="decimal"></label>
-        <label class="field">Planned control share <span class="suffix">%</span><input type="number" id="pl" min="1" max="99" step="1" inputmode="decimal"></label>
-        <label class="field">Confidence<select id="c"><option value="90">90%</option><option value="95" selected>95%</option><option value="99">99%</option></select></label>
+        <label class="field">Ad spend <span class="suffix">$</span><input autocomplete="off" type="number" id="sp" min="0" step="100" inputmode="numeric"></label>
+        <label class="field">Revenue per conversion <span class="suffix">$</span><input autocomplete="off" type="number" id="rpc" min="0" step="1" inputmode="decimal"></label>
+        <label class="field">Contribution margin <span class="suffix">%</span><input autocomplete="off" type="number" id="mar" min="1" max="100" step="1" inputmode="decimal"></label>
+        <label class="field">Planned control share <span class="suffix">%</span><input autocomplete="off" type="number" id="pl" min="1" max="99" step="1" inputmode="decimal"></label>
+        <label class="field">Confidence<select autocomplete="off" id="c"><option value="90">90%</option><option value="95" selected>95%</option><option value="99">99%</option></select></label>
       </div>
       <p class="hint">Treated and control come from random assignment. Spend is what was spent on the treated group during the test. The planned control share is used to check the split came out as designed.</p>
       <div id="err" role="alert"></div>
@@ -205,6 +213,7 @@ cost per incremental conversion = spend / incremental conversions</div>
       <p><b>Read the range, not the point.</b> The central estimate is the least likely single value. The memo leads with the range for that reason.</p>
     </section>
 
+    <section class="next-step"><div class="k">next</div><a href="https://roas-haircut.benjads.com/">roas haircut</a><p>Find out how much of the reported ROAS has to be real for the ads to pay.</p></section>
     <footer class="site-foot">
       <picture><source media="(prefers-color-scheme: dark)" srcset="logo/benjads-footnote-paper-transparent.svg"><img src="logo/benjads-footnote-olive-transparent.svg" alt="ben.j.ads"></picture>
       <p><span class="tag">1</span>Wilson intervals combined by Newcombe's method (1998). Random assignment assumed. Marketing science, given away free, for people who spend money.</p>
